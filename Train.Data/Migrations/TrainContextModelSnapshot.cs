@@ -51,9 +51,6 @@ namespace Train.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("NumberOfChairs")
-                        .HasColumnType("int");
-
                     b.HasKey("WagonId");
 
                     b.ToTable("Wagons");

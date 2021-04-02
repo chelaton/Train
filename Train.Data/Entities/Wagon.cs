@@ -11,7 +11,6 @@ namespace Train.Data.Entities
     {
         [Key]
         public int WagonId { get; set; }
-        public int NumberOfChairs { get; set; }
         public List<Chair> Chairs { get; set; }
     }
 }

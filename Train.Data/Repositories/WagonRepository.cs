@@ -45,13 +45,47 @@ namespace Train.Data.Repositories
 
         public async Task<Wagon> UpdateAsync(Wagon wagon)
         {
-            var local = _trainContext.Wagons.Local.FirstOrDefault(x => x.WagonId == wagon.WagonId);
-            if (local is not null)
+            Wagon actualWagon = _trainContext.Wagons.Include(x=>x.Chairs).FirstOrDefault(x => x.WagonId == wagon.WagonId);
+            // Update parent
+
+            if (actualWagon != null)
             {
-                _trainContext.Entry(local).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+                _trainContext.Entry(actualWagon).CurrentValues.SetValues(wagon);
+
+                // Delete children
+                foreach (var existingChild in actualWagon.Chairs.ToList())
+                {
+                    if (!wagon.Chairs.Any(c => c.ChairId == existingChild.ChairId))
+                        _trainContext.Chairs.Remove(existingChild);
+                }
+
+                // Update and Insert children
+                foreach (var childModel in wagon.Chairs)
+                {
+                    var existingChild = actualWagon.Chairs
+                        .Where(c => c.ChairId == childModel.ChairId && c.ChairId != default(int))
+                        .SingleOrDefault();
+
+                    if (existingChild != null)
+                        // Update child
+                        _trainContext.Entry(existingChild).CurrentValues.SetValues(childModel);
+                    else
+                    {
+                        // Insert child
+                        var newChild = new Chair
+                        {
+                            ChairId = childModel.ChairId,
+                            NearWindow  = childModel.NearWindow,
+                            Number  = childModel.Number,
+                            Reserved  = childModel.Reserved,
+                            WagonId  = childModel.WagonId
+                        };
+                        actualWagon.Chairs.Add(newChild);
+                    }
+                }
+
+                await _trainContext.SaveChangesAsync();
             }
-            _trainContext.Entry(wagon).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            await _trainContext.SaveChangesAsync();
             return wagon;
         }
     }

@@ -9,6 +9,6 @@ namespace Train.Core.Models
         public int Number { get; set; }
         public bool Reserved { get; set; }
         public int WagonId { get; set; }
-        public WagonModel Wagon { get; set; }
+        //public WagonModel Wagon { get; set; }
     }
 }

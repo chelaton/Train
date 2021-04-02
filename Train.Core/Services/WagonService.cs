@@ -32,7 +32,6 @@ namespace Train.Core.Services
 
             var wagonEntity = new Data.Entities.Wagon
             {
-                NumberOfChairs = wagonModel.NumberOfChairs,
                 Chairs = chairs
             };
 
@@ -44,7 +43,7 @@ namespace Train.Core.Services
             return new WagonModel
             {
                 WagonId = wagonEntity.WagonId,
-                NumberOfChairs = wagonEntity.NumberOfChairs,
+                NumberOfChairs = wagonEntity.Chairs.Count,
                 Chairs = listChairs
             };
         }
@@ -66,7 +65,7 @@ namespace Train.Core.Services
             return new WagonModel
             {
                 WagonId = wagonEntity.WagonId,
-                NumberOfChairs = wagonEntity.NumberOfChairs,
+                NumberOfChairs = wagonEntity.Chairs.Count,
                 Chairs = wagonEntity.Chairs
                       .Select(x => new ChairModel() { ChairId=x.ChairId, NearWindow = x.NearWindow, Number = x.Number, Reserved = x.Reserved, WagonId = x.WagonId })
                       .ToList()
@@ -79,7 +78,7 @@ namespace Train.Core.Services
             return await query.Select(wagonEntity => new WagonModel
             {
                 WagonId = wagonEntity.WagonId,
-                NumberOfChairs = wagonEntity.NumberOfChairs,
+                NumberOfChairs = wagonEntity.Chairs.Count,
                 Chairs = wagonEntity.Chairs
                       .Select(x => new ChairModel() { ChairId = x.ChairId, NearWindow = x.NearWindow, Number = x.Number, Reserved = x.Reserved, WagonId = x.WagonId })
                       .ToList()
@@ -92,7 +91,6 @@ namespace Train.Core.Services
             var wagonEntity = new Data.Entities.Wagon
             {
                 WagonId = wagonModel.WagonId,
-                NumberOfChairs = wagonModel.NumberOfChairs,
                 Chairs = wagonModel.Chairs
                       .Select(x => new Data.Entities.Chair() { ChairId = x.ChairId, NearWindow = x.NearWindow, Number = x.Number, Reserved = x.Reserved, WagonId = x.WagonId })
                       .ToList()
@@ -103,7 +101,7 @@ namespace Train.Core.Services
             return new WagonModel
             {
                 WagonId = wagonEntity.WagonId,
-                NumberOfChairs = wagonEntity.NumberOfChairs,
+                NumberOfChairs = wagonEntity.Chairs.Count,
                 Chairs = wagonEntity.Chairs
                       .Select(x => new ChairModel() { ChairId = x.ChairId, NearWindow = x.NearWindow, Number = x.Number, Reserved = x.Reserved, WagonId = x.WagonId })
                       .ToList()

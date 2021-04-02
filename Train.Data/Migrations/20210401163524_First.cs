@@ -2,7 +2,7 @@
 
 namespace Train.Data.Migrations
 {
-    public partial class Aaa : Migration
+    public partial class First : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,8 +11,7 @@ namespace Train.Data.Migrations
                 columns: table => new
                 {
                     WagonId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NumberOfChairs = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
                 },
                 constraints: table =>
                 {

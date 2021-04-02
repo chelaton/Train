@@ -9,6 +9,6 @@ namespace Train.API.Models
     {
         public int WagonId { get; set; }
         public int NumberOfChairs { get; set; }
-        public ICollection<UpdateChairModel> UpdateChairs { get; set; }
+        public ICollection<UpdateChairModel> Chairs { get; set; }
     }
 }

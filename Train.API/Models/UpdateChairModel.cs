@@ -12,6 +12,6 @@ namespace Train.API.Models
         public int Number { get; set; }
         public bool Reserved { get; set; }
         public int WagonId { get; set; }
-        public UpdateWagonModel UpdateWagon { get; set; }
+        //public UpdateWagonModel UpdateWagon { get; set; }
     }
 }

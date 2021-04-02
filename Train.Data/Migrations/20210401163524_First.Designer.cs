@@ -9,8 +9,8 @@ using Train.Data;
 namespace Train.Data.Migrations
 {
     [DbContext(typeof(TrainContext))]
-    [Migration("20210325151127_Aaa")]
-    partial class Aaa
+    [Migration("20210401163524_First")]
+    partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,9 +52,6 @@ namespace Train.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("NumberOfChairs")
-                        .HasColumnType("int");
 
                     b.HasKey("WagonId");
 

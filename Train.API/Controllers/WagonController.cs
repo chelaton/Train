@@ -53,7 +53,6 @@ namespace Train.API.Controllers
             {
                 NumberOfChairs = createWagonModel.NumberOfChairs,
             };
-
             var createdWagon = await _wagonService.CreateWagonAsync(wagonModel);
 
             return CreatedAtAction(nameof(GetWagonAsync), new { wagonId = createdWagon.WagonId }, createdWagon);
@@ -64,7 +63,7 @@ namespace Train.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> UpdateWagonAsync(int wagonId, UpdateWagonModel updateWagonModel)
+        public async Task<ActionResult> UpdateWagonAsync([FromRoute] int wagonId, [FromBody] UpdateWagonModel updateWagonModel)
         {
             if (wagonId != updateWagonModel.WagonId)
             {
@@ -81,14 +80,14 @@ namespace Train.API.Controllers
             {
                 WagonId = wagonId,
                 NumberOfChairs = updateWagonModel.NumberOfChairs,
-                Chairs = updateWagonModel.UpdateChairs
+                Chairs = updateWagonModel.Chairs
                       .Select(x => new ChairModel() { NearWindow = x.NearWindow, Number = x.Number, Reserved = x.Reserved })
                       .ToList()
             };
 
             await _wagonService.UpdateWagonAsync(wagonModel);
 
-            return NoContent();
+            return Ok();
         }
 
         [HttpDelete("{id}")]
